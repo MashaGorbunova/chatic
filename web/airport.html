@@ -1,0 +1,50 @@
+<html>
+<head>
+    <script type="text/javascript" for="window" event="onload">
+        if (window.DOMParser)
+        { // Firefox, Chrome, Opera, etc.
+            xmlhttp = new XMLHttpRequest();
+            xmlhttp.open("GET","http://chatic/web/airports.xml",false);
+            xmlhttp.send(null);
+            var fileContent = xmlhttp.responseText;
+            parser=new DOMParser();
+            xmlDoc=parser.parseFromString(fileContent,"text/xml");
+            console.log(xmlDoc);
+        }
+        else // Internet Explorer
+        {
+            xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+            xmlDoc.async=false;
+            xmlDoc.loadXML("airports.xml");
+            console.log('2');
+        }
+        console.log(xmlDoc.getElementsByTagName("flight")[0]);
+        nodes=xmlDoc.getElementsByTagName("flight");
+        var text = '';
+        for(var i=0; i<nodes.length; i++){
+            text = '<tr><td>';
+            text += nodes[i].childNodes[0].nodeValue;
+            text +='</td></tr>';
+
+        }
+        console.log(text);
+        tbody.innerHTML(text);
+        //xmlDoc.getElementsByTagName("flight")[0].childNodes[0].nodeValue;
+
+        //a1.innerText=nodes.item(0).text;
+       // document.querySelector('#a2').innerText=nodes.item(1).text;
+       // document.querySelector('#a3').innerText=nodes.item(2).text;
+       // document.querySelector('#a4').innerText=nodes.item(3).text;
+    </script>
+</head>
+<body bgcolor="#c0c0c0">
+<h1>Information about flights</h1>
+<table>
+    <thead>
+    <th>Number</th><th>Departure city</th><th>Departure airport</th><th>Departure time</th>
+    <th>Destination city</th><th>Destination airport</th><th>Destination time</th><th>Type aircraft</th>
+    </thead>
+    <tbody></tbody>
+</table>
+</body>
+</html>

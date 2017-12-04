@@ -1,0 +1,21 @@
+airport {
+    background-color: #cccccc;
+}
+
+flight {
+    background-color: #ffffff;
+    display: block;
+    margin-bottom: 20px;
+}
+number, departure, destination, type_aircraft {
+    background-color: #ffffff;
+    display: block;
+    margin-bottom: 10px;
+}
+number {
+    font-weight: bold;
+}
+
+city, airport_city, time, type_aircraft {
+    margin-left: 10px;
+}
