@@ -117,3 +117,7 @@ a.desc:after {
 .navbar-brand {
     padding: 5px 15px;
 }
+
+.wrap-content {
+    margin-top: 50px;
+}

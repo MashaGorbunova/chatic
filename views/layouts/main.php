@@ -61,7 +61,7 @@ AppAsset::register($this);
             ['label' => Yii::t('app', 'Contact'), 'url' => ['/site/contact']],
             $registration,
             Yii::$app->user->isGuest ? (
-                ['label' => '<i class="fa fa-sign-in"></i> '.'Login', 'url' => ['/site/login']]
+                ['label' => '<i class="fa fa-sign-in"></i> '.Yii::t('app', 'Login'), 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
@@ -78,20 +78,20 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
+    <div class="wrap-content">
+        <div class="container">
+            <?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
+            <?= Alert::widget() ?>
+        </div>
         <?= $content ?>
     </div>
 </div>
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">&copy; Site is made by Maria Gorbunova <?= date('Y') ?></p>
     </div>
 </footer>
 

@@ -121,7 +121,39 @@ class SiteController extends Controller
     }
 
     public function actionRegistration(){
-        return $this->render('registration');
+        $model = new SignupForm();
+        $model->scenario = User::SCENARIO_SIGNUP;
+
+        $language = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"], 0, 2);
+        $geo = new \jisoft\sypexgeo\Sypexgeo();
+        $ip = \Yii::$app->request->userIP;
+        $data = $geo->get($ip);
+
+        if($countryModel = Country::find()->where(['code' => ArrayHelper::getValue($data['country'], 'iso')])->one()){
+            $country = ArrayHelper::getValue($countryModel, 'id');
+        }
+        else {
+            $countryModel = Country::find()->where(['code' => 'UA'])->one();
+            $country = ArrayHelper::getValue($countryModel, 'id');
+        }
+
+        if(!$enumModel = Enum::find()->where(['type' => Enum::LANGUAGE, 'code' => strtoupper($language)])->one()){
+            $language = 'UK';
+        }
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($user = $model->signup()) {
+                if (Yii::$app->getUser()->login($user)) {
+                    return $this->redirect(['done-signup']);
+                }
+            }
+        }
+
+        return $this->render('registration', [
+            'model'    => $model,
+            'country'  => $country,
+            'language' => strtoupper($language)
+        ]);
     }
 
     public function actionCabinet(){
