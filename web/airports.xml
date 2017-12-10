@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--?xml-stylesheet type="text/css" href="/css/airport.css"? -->
+<!--?xml-stylesheet type="text/xsl" href="airport.xsl"?-->
+
+<airport>
+    <flight id="f1">
+        <number>PS185</number>
+        <departure>
+            <city>Kyiv</city>
+            <airport_city>Boryspil</airport_city>
+            <time>9-20</time>
+        </departure>
+        <destination>
+            <city>Ryga</city>
+            <airport_city>Ryga</airport_city>
+            <time>11-05</time>
+        </destination>
+        <type_aircraft>Aerobus A320</type_aircraft>
+    </flight>
+    <flight id="f2">
+        <number>DE123</number>
+        <departure>
+            <city>London</city>
+            <airport_city>London</airport_city>
+            <time>3-27</time>
+        </departure>
+        <destination>
+            <city>Kyiv</city>
+            <airport_city>Boryspil</airport_city>
+            <time>4-10</time>
+        </destination>
+        <type_aircraft>Aerobus A320</type_aircraft>
+    </flight>
+    <flight id="f3">
+        <number>MW294</number>
+        <departure>
+            <city>Kyiv</city>
+            <airport_city>Boryspil</airport_city>
+            <time>23-45</time>
+        </departure>
+        <destination>
+            <city>New York</city>
+            <airport_city>New York</airport_city>
+            <time>12-10</time>
+        </destination>
+        <type_aircraft>Boing 747</type_aircraft>
+    </flight>
+    <flight id="f4">
+        <number>KA923</number>
+        <departure>
+            <city>Paris</city>
+            <airport_city>Paris</airport_city>
+            <time>20-30</time>
+        </departure>
+        <destination>
+            <city>Kyiv</city>
+            <airport_city>Boryspil</airport_city>
+            <time>23-35</time>
+        </destination>
+        <type_aircraft>Boing 737</type_aircraft>
+    </flight>
+    <flight id="f5">
+        <number>TK236</number>
+        <departure>
+            <city>Kyiv</city>
+            <airport_city>Boryspil</airport_city>
+            <time>11-25</time>
+        </departure>
+        <destination>
+            <city>Praga</city>
+            <airport_city>Praga</airport_city>
+            <time>12-15</time>
+        </destination>
+        <type_aircraft>Aerobus A320</type_aircraft>
+    </flight>
+</airport>

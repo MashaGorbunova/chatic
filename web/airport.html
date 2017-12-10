@@ -1,0 +1,63 @@
+<html>
+<head>
+    <script type="text/javascript" for="window" event="onload">
+        window.onload = function(){
+            var hasElement = document.getElementById('body-table');
+            if (window.DOMParser)
+            { // Firefox, Chrome, Opera, etc.
+                xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET","http://chatic/web/airports.xml",false);
+                xmlhttp.send(null);
+                var fileContent = xmlhttp.responseText;
+                parser=new DOMParser();
+                xmlDoc=parser.parseFromString(fileContent,"text/xml");
+            }
+            else // Internet Explorer
+            {
+                xmlDoc=new ActiveXObject("Microsoft.XMLDOM");
+                xmlDoc.async=false;
+                xmlDoc.loadXML("airports.xml");
+            }
+
+            nodes=xmlDoc.getElementsByTagName("flight");
+
+            var text = '';
+            for(var i=0; i<nodes.length; i++) {
+                text += '<tr>';
+                text += '<td>'+nodes[i].querySelector("number").textContent+'</td>';
+                text += '<td>'+nodes[i].querySelector("departure city").textContent+'</td>';
+                text += '<td>'+nodes[i].querySelector("departure airport_city").textContent+'</td>';
+                text += '<td>'+nodes[i].querySelector("departure time").textContent+'</td>';
+                text += '<td>'+nodes[i].querySelector("destination city").textContent+'</td>';
+                text += '<td>'+nodes[i].querySelector("destination airport_city").textContent+'</td>';
+                text += '<td>'+nodes[i].querySelector("destination time").textContent+'</td>';
+                text += '<td>'+nodes[i].querySelector("number").textContent+'</td>';
+                text += '</tr>';
+                var n = nodes[i].querySelector("type_aircraft");
+            }
+            hasElement.innerHTML = text;
+        };
+
+    </script>
+
+    <style>
+        table {
+            border: 1px solid blue;
+            background: #ffffff;
+        }
+        td, th {
+            border: 1px solid #c0c0c0;
+        }
+    </style>
+</head>
+<body bgcolor="#c0c0c0">
+<h1>Information about flights</h1>
+<table>
+    <thead>
+    <th>Number</th><th>Departure city</th><th>Departure airport</th><th>Departure time</th>
+    <th>Destination city</th><th>Destination airport</th><th>Destination time</th><th>Type aircraft</th>
+    </thead>
+    <tbody id="body-table"></tbody>
+</table>
+</body>
+</html>
