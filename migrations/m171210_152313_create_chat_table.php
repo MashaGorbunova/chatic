@@ -13,14 +13,14 @@ class m171210_152313_create_chat_table extends Migration
     public function up()
     {
         if(Yii::$app->db->getTableSchema('{{%chat}}') === null){
-            Yii::$app->db->createCommand("CREATE TABLE {{%chat}} (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `userId` INT(11) DEFAULT NULL,
-  `message` TEXT,
-  `updateDate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB;
-")->execute();
+            $this->createTable('{{%chat}}', [
+                'id' => $this->primaryKey(),
+                'user_id' => $this->integer()->notNull(),
+                'send_user_id' => $this->integer()->notNull(),
+                'message' => $this->text(),
+                'create_date' => $this->dateTime(),
+                'is_read' => $this->smallInteger(1)->defaultValue(0)
+            ]);
         }
     }
 

@@ -62,7 +62,9 @@ $config = [
 
     ],
     'modules' => [
+        'redactor' => 'yii\redactor\RedactorModule',
         'user' => [
+            'admins' => ['user2@ukr.net'],
             'class' => 'dektrium\user\Module',
             'enableConfirmation'=>false,
             'enableRegistration'=>true,

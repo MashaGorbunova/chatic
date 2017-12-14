@@ -3,9 +3,11 @@
 namespace app\controllers;
 
 use app\models\Student;
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\ContactForm;
@@ -23,10 +25,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'cabinet'],
+                'only' => ['logout', 'cabinet', 'registration-student', 'my-data'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'cabinet', 'registration-student', 'send-chat'],
+                        'actions' => ['logout', 'cabinet', 'registration-student', 'my-data'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -134,8 +136,23 @@ class SiteController extends Controller
         else return $this->redirect('registration-student');
     }
 
-    public function actionLaba4(){
-        return $this->render('airport');
+    public function actionMyData(){
+
+        $this->layout = '/admin';
+
+        if(!$model = User::findOne(['id' => Yii::$app->user->id])){
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        if(!$student = $model->student){
+            $student = new Student();
+        }
+
+        return $this->render('my-data',
+            [
+                'model' => $model,
+                'student' => $student
+            ]);
     }
 
     public function actionChlang($lang)
@@ -144,9 +161,7 @@ class SiteController extends Controller
         $this->redirect(Yii::$app->request->referrer);
     }
 
-    public function actionSendChat(){
-        if (!empty($_POST)) {
-            echo \sintret\chat\ChatRoom::sendChat($_POST);
-        }
+    public function actionLaba4(){
+        return $this->render('airport');
     }
 }

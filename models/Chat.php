@@ -5,19 +5,17 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "chat".
+ * This is the model class for table "{{%chat}}".
  *
  * @property integer $id
+ * @property integer $user_id
+ * @property integer $send_user_id
  * @property string $message
- * @property integer $userId
- * @property string $updateDate
+ * @property string $create_date
+ * @property integer $is_read
  */
 class Chat extends \yii\db\ActiveRecord
 {
-
-    public $userModel;
-    public $userField;
-
     /**
      * @inheritdoc
      */
@@ -32,18 +30,11 @@ class Chat extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['message'], 'required'],
-            [['userId'], 'integer'],
-            [['updateDate', 'message'], 'safe']
+            [['user_id', 'send_user_id'], 'required'],
+            [['user_id', 'send_user_id', 'is_read'], 'integer'],
+            [['message'], 'string'],
+            [['create_date'], 'safe'],
         ];
-    }
-
-    public function getUser()
-    {
-        if (isset($this->userModel))
-            return $this->hasOne($this->userModel, ['id' => 'userId']);
-        else
-            return $this->hasOne(Yii::$app->getUser()->identityClass, ['id' => 'userId']);
     }
 
     /**
@@ -52,49 +43,12 @@ class Chat extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'message' => 'Message',
-            'userId' => 'User',
-            'updateDate' => 'Update Date',
+            'id' => Yii::t('app', 'ID'),
+            'user_id' => Yii::t('app', 'User ID'),
+            'send_user_id' => Yii::t('app', 'Send User ID'),
+            'message' => Yii::t('app', 'Message'),
+            'create_date' => Yii::t('app', 'Create Date'),
+            'is_read' => Yii::t('app', 'Is Read'),
         ];
-    }
-
-    public function beforeSave($insert)
-    {
-        $this->userId = Yii::$app->user->id;
-        return parent::beforeSave($insert);
-    }
-
-    public static function records()
-    {
-        return static::find()->orderBy('id desc')->limit(10)->all();
-    }
-
-    public function data()
-    {
-        $userField = $this->userField;
-        $output = '';
-        $models = Chat::records();
-        if ($models)
-            foreach ($models as $model) {
-                if (isset($model->user->$userField)) {
-                    $avatar = $model->user->$userField;
-                } else {
-                    $avatar = Yii::$app->assetManager->getPublishedUrl("@vendor/sintret/yii2-chat-adminlte/assets/img/avatar.png");
-                }
-
-                $output .= '<div class="item">
-                <img class="online" alt="user image" src="' . $avatar . '">
-                <p class="message">
-                    <a class="name" href="#">
-                        <small class="text-muted pull-right" style="color:green"><i class="fa fa-clock-o"></i> ' . \kartik\helpers\Enum::timeElapsed($model->updateDate) . '</small>
-                        ' . $model->user->username . '
-                    </a>
-                   ' . $model->message . '
-                </p>
-            </div>';
-            }
-
-        return $output;
     }
 }
