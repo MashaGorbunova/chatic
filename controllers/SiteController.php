@@ -148,6 +148,27 @@ class SiteController extends Controller
             $student = new Student();
         }
 
+        if(Yii::$app->request->isPost){
+            $userData = Yii::$app->request->post('User');
+            $email = $model->email;
+            $username = $model->username;
+
+            $model->username = ($userData['username'] == null)?$username:$userData['username'];
+            $model->email = ($userData['email'] == null)?$email:$userData['email'];
+            if (empty($userData['password'])) {
+                $model->save(false);
+            }
+            else {
+                $model->password = $userData['password'];
+                $model->save(false, ['password_hash']);
+            }
+
+            $student->load(Yii::$app->request->post());
+            $student->save();
+
+            return $this->redirect(Yii::$app->request->referrer);
+        }
+
         return $this->render('my-data',
             [
                 'model' => $model,

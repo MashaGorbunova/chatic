@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                ->label(false) ?>
 
                            <?= $form->field($model, 'password')
-                               ->passwordInput(['placeholder' => Yii::t('app', 'Password')])
+                               ->passwordInput(['placeholder' => Yii::t('app', 'Change Password')])
                                ->label(false) ?>
                        </fieldset>
 

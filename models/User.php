@@ -17,6 +17,7 @@ use dektrium\user\helpers\Password;
 use dektrium\user\Mailer;
 use dektrium\user\Module;
 use dektrium\user\models\Token;
+use Yii;
 
 /**
  * User ActiveRecord model.
@@ -60,7 +61,7 @@ class User extends BaseUser
         $rules = parent::rules();
 
         unset($rules['usernamUnique']); // take off unique username
-        unset($rules['usernamePattern']); // take off pattern for username
+        unset($rules['usernameMatch']); // take off pattern for username
 
         return $rules;
     }
@@ -160,6 +161,14 @@ class User extends BaseUser
 
     public function getStudent(){
         return self::hasOne(Student::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
 }
