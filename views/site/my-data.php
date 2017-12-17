@@ -9,7 +9,8 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
+use yii\bootstrap\Modal;
+use kartik\file\FileInput;
 
 $this->title = Yii::t('app', 'My data');
 $this->params['breadcrumbs'][] = $this->title;
@@ -19,8 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
        <div class="box box-default">
            <div class="box-body">
                <div class="row">
+                   <?php $form = ActiveForm::begin(['id' => 'form-mydata', 'options' => ['enctype' => 'multipart/form-data']]); ?>
+
                    <div class="col-md-6">
-                       <?php $form = ActiveForm::begin(['id' => 'form-mydata']); ?>
 
                        <fieldset>
                            <legend><?=Html::label(Yii::t('app', 'Information for login')) ?></legend>
@@ -81,9 +83,40 @@ $this->params['breadcrumbs'][] = $this->title;
                            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-primary', 'name' => 'save-button']) ?>
                        </div>
 
-                       <?php ActiveForm::end(); ?>
+                   </div>
+                   <div class="col-md-6 text-center">
+                       <h4><?= Yii::t('app', 'Photo') ?></h4>
+
+                       <div class="img" style="width:100px; margin:auto">
+                           <?=Html::img('/web'.$model->photo,
+                               ['class' => 'img-responsive','style' => 'width: auto; margin-bottom: 10px']) ?>
+                       </div>
+
+                       <div class="form-group">
+                           <?php
+                           Modal::begin([
+                               'header' => 'File Input inside Modal',
+                               'toggleButton' => [
+                                   'label' => Yii::t('app', 'Load photo'), 'class' => 'btn btn-default'
+                               ],
+                           ]); ?>
+
+                           <?=
+                           FileInput::widget(
+                               [
+                                   'model' => $model,
+                                   'attribute' => 'imageFile',
+                               ]);
+                           ?>
+                           <?php Modal::end(); ?>
+                           <?= Html::a(
+                               Yii::t('app', 'Delete photo'),
+                               ['/site/delete-photo'],
+                               ['class'=>'btn btn-default']
+                           ) ?>
                    </div>
                </div>
+                   <?php ActiveForm::end(); ?>
            </div>
        </div>
     </div>

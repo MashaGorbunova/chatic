@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\ContactForm;
+use yii\web\UploadedFile;
 
 
 class SiteController extends Controller
@@ -166,6 +167,10 @@ class SiteController extends Controller
             $student->load(Yii::$app->request->post());
             $student->save();
 
+            if($model->imageFile = UploadedFile::getInstance($model, 'imageFile')){
+                $model->saveImage();
+            }
+
             return $this->redirect(Yii::$app->request->referrer);
         }
 
@@ -174,6 +179,16 @@ class SiteController extends Controller
                 'model' => $model,
                 'student' => $student
             ]);
+    }
+
+    public function actionDeletePhoto(){
+
+        if($model = User::findOne(['id' => Yii::$app->user->id])){
+            $model->deleteImage();
+        }
+        else throw new NotFoundHttpException('The requested page does not exist.');
+
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionChlang($lang)

@@ -2,12 +2,14 @@
 
 namespace app\controllers;
 
+use dektrium\user\models\UserSearch;
 use Yii;
 use app\models\Chat;
 use app\models\ChatSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
 /**
  * ChatController implements the CRUD actions for Chat model.
@@ -28,6 +30,15 @@ class ChatController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'start'],
+                        'allow' => ['@'],
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -37,13 +48,18 @@ class ChatController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ChatSearch();
+        $searchModel = new \app\models\UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andWhere(['<>', 'id', Yii::$app->user->id]);
 
-        return $this->render('index', [
+        return $this->render('list_user', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionStart($id){
+
     }
 
     /**

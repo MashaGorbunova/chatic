@@ -56,12 +56,16 @@ use Yii;
 class User extends BaseUser
 {
     public static $usernameRegexp = '/^[-a-zA-ZА-Яа-яЁёІіЇї0-9_\.@]+$/';
+    public $imageFile;
+
     public function rules()
     {
         $rules = parent::rules();
 
-        unset($rules['usernamUnique']); // take off unique username
+        unset($rules['usernameUnique']); // take off unique username
         unset($rules['usernameMatch']); // take off pattern for username
+
+        $rules ['imageFile'] = [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg'];
 
         return $rules;
     }
@@ -169,6 +173,38 @@ class User extends BaseUser
     public function setPassword($password)
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+    }
+
+    function getPhoto(){
+        if($data = glob(Yii::getAlias('@webroot/gallery/user/'.$this->id.'.*'))){
+            return str_replace(Yii::getAlias('@webroot'), Yii::getAlias('@web'), $data[0]);
+        }else{
+            return Yii::getAlias('@web/images/no_image.png');
+        }
+    }
+
+    function getImagePath(){
+        $path = Yii::getAlias('@webroot/gallery');
+        if(! file_exists($path)){
+            mkdir($path, 0775);
+        }
+        if(! file_exists($path.'/user')){
+            mkdir($path.'/user', 0775);
+        }
+        return $path.'/user';
+    }
+
+    function saveImage(){
+        $this->imageFile->saveAs($this->imagePath. '/'. $this->id. '.' . $this->imageFile->extension);
+    }
+
+    function deleteImage() {
+        $path = $this->getPhoto();
+        $basename = pathinfo($path)['basename'];
+
+        if ($path != Yii::getAlias('@web/images/no_image.png')) {
+            unlink($this->getImagePath().'/'.$basename);
+        }
     }
 
 }

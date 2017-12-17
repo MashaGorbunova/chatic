@@ -5,7 +5,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                <img src="/web<?= Yii::$app->user->identity->photo ?>" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
                 <p><?=Yii::$app->user->identity->username?></p>
@@ -27,7 +27,7 @@
                     [
                         'label' => Yii::t('app','Chat'),
                         'icon' => 'handshake-o ',
-                        'url' => ['/chat'],
+                        'url' => ['/chat/index'],
                         'visible' => !Yii::$app->user->isGuest
                     ],
                     [
