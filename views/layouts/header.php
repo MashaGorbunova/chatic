@@ -19,6 +19,15 @@ use yii\helpers\Html;
 
             <ul class="nav navbar-nav">
 
+                <li class="dropdown">
+                    <a class="dropdown-toggle" href="#" data-toggle="dropdown">
+                        <?=Yii::$app->language?><span class="caret"></span></a>
+                    <ul id="w4" class="dropdown-menu">
+                        <li><a href="<?=\yii\helpers\Url::to(['/site/chlang', 'lang' => 'en'])?>" tabindex="-1">en</a></li>
+                        <li><a href="<?=\yii\helpers\Url::to(['/site/chlang', 'lang' => 'uk'])?>" tabindex="-1">uk</a></li>
+                    </ul>
+                </li>
+
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/web<?= Yii::$app->user->identity->photo ?>" class="user-image" alt="User Image"/>
@@ -32,7 +41,10 @@ use yii\helpers\Html;
 
                             <p>
                                <?=Yii::$app->user->identity->student->name?> <?=Yii::$app->user->identity->student->surname?>
-                                <small>Member since Nov. 2012</small>
+                                <small>
+                                    <?=Yii::t('app', 'Member since {data}',
+                                        ['data' => Yii::$app->formatter->asDate(Yii::$app->user->identity->created_at)])?>
+                                </small>
                             </p>
                         </li>
 
@@ -45,7 +57,7 @@ use yii\helpers\Html;
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
-                                    'Sign out',
+                                    Yii::t('app', 'Sign out'),
                                     ['/site/logout'],
                                     ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>

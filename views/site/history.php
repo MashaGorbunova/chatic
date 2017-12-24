@@ -12,7 +12,7 @@ else $document = \phpQuery::newDocument(file_get_contents('http://ipt.kpi.ua/ist
 ?>
 
 <div class="container">
-    <div class="row">
+    <div class="row history">
         <div class="col-md-12">
             <?php
             foreach($document->find('.content-wrapper') as $key=> $div){

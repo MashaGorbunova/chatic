@@ -24,7 +24,7 @@ use yii\helpers\ArrayHelper;
                 </p>
                 <p>
                     <small><?=Html::label(Yii::t('app', 'Last visit'))?>:</small>
-                    <?=Yii::$app->formatter->asDatetime($model->last_login_at, 'dd-MM-Y HH:mm:i')?>
+                    <?=Yii::$app->formatter->asDatetime($model->last_login_at, 'dd-MM-Y HH:mm:s')?>
                 </p>
             </div>
             <div class="col-md-4 mgt-25 text-right">

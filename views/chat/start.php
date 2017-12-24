@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 <div class="preloader">
                                     <span class="label label-info">
                                         <?=Html::button(Yii::t('app', 'See more...'),
-                                            ['class' => 'btn btn-link', 'id' => 'preloader'])?>
+                                            ['class' => 'btn btn-link', 'onClick' => 'preloader()'])?>
                                     </span>
                                 </div>
                             <?php endif; ?>
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <?=ArrayHelper::getValue($elem->user, 'username')?>
                                             </span>
                                             <span class="direct-chat-timestamp pull-right">
-                                                <?=Yii::$app->formatter->asDatetime(strtotime($elem->create_date), 'dd-MM-Y HH:mm:i')?>
+                                                <?=Yii::$app->formatter->asDatetime(strtotime($elem->create_date), 'dd-MM-Y HH:mm:s')?>
                                             </span>
                                         </div>
                                         <!-- /.direct-chat-info -->
@@ -72,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 <?=ArrayHelper::getValue($elem->user, 'username')?>
                                             </span>
                                             <span class="direct-chat-timestamp pull-left">
-                                                <?=Yii::$app->formatter->asDatetime(strtotime($elem->create_date), 'dd-MM-Y HH:mm:i')?>
+                                                <?=Yii::$app->formatter->asDatetime(strtotime($elem->create_date), 'dd-MM-Y HH:mm:s')?>
                                             </span>
                                         </div>
                                         <!-- /.direct-chat-info -->
@@ -102,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ])
                         ->label(false)
                     ?>
-                    <button type="button" class="btn btn-primary btn-flat" style="float:right" id="sendBtn">
+                    <button type="button" class="btn btn-primary btn-flat" style="float:right" onClick="sendBtn()">
                         <?=Yii::t('app', 'Send')?>
                     </button>
                     <?php ActiveForm::end(); ?>
@@ -128,7 +128,7 @@ $this->params['breadcrumbs'][] = $this->title;
         })
     }
 
-    $(document).on("click", "#sendBtn", function(){
+    function sendBtn(){
         event.preventDefault();
         var msg = $('#chat-message').val();
         $.ajax({
@@ -140,14 +140,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 var block = document.getElementById("block");
                 block.scrollTop = block.scrollHeight;
             }
-        })
-    });
+        });
+    }
 
-    var pos = 10;
-    $(document).on("click","#preloader", function(){
+    var pos = 10; // limit of record
+
+    function preloader(){
         event.preventDefault();
         var blockPrevHeight = document.getElementById("block").scrollHeight;
-
+        setTimeout(checkMsg(), 50);
         $.ajax({
             url: '<?=\yii\helpers\Url::to(['/chat/start', 'id' => $user->id])?>',
             method: 'POST',
@@ -159,7 +160,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 block.scrollTop = block.scrollHeight - blockPrevHeight;
             }
         })
-    });
+    }
 
     $(document).ready(function(){
         var chat = <?=count($chat)?>;
@@ -173,16 +174,7 @@ $this->params['breadcrumbs'][] = $this->title;
         }
 
         setInterval(function(){
-            $.ajax({
-                url: '<?=\yii\helpers\Url::to(['/chat/start', 'id' => $user->id])?>',
-                method: 'POST',
-                data: {pos: pos},
-                success: function(msg){
-                    $('.box-body').html($('.box-body', msg));
-                    var block = document.getElementById("block");
-                    block.scrollTop = block.scrollHeight;
-                }
-            })
+            checkMsg();
         }, 7000);
     })
 </script>

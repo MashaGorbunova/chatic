@@ -55,12 +55,12 @@ class Content extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'title_uk' => Yii::t('app', 'Title'),
-            'text_short_uk' => Yii::t('app', 'Text Short'),
-            'text_full_uk' => Yii::t('app', 'Text Full'),
-            'title_en' => Yii::t('app', 'Title'),
-            'text_short_en' => Yii::t('app', 'Text Short'),
-            'text_full_en' => Yii::t('app', 'Text Full'),
+            'title_uk' => Yii::t('app', 'Title uk'),
+            'text_short_uk' => Yii::t('app', 'Text Short uk'),
+            'text_full_uk' => Yii::t('app', 'Text Full uk'),
+            'title_en' => Yii::t('app', 'Title en'),
+            'text_short_en' => Yii::t('app', 'Text Short en'),
+            'text_full_en' => Yii::t('app', 'Text Full en'),
             'create_date' => Yii::t('app', 'Create Date'),
             'order' => Yii::t('app', 'Order'),
             'is_published' => Yii::t('app', 'Is Published'),
