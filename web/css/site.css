@@ -114,14 +114,6 @@ a.desc:after {
     opacity: 1;
 }
 
-@media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
-        text-align: left;
-        width: 100%;
-        padding: 10px 15px;
-    }
-}
 
 .nav > li > form > button.logout:focus,
 .nav > li > form > button.logout:hover {
@@ -138,4 +130,32 @@ a.desc:after {
 
 .wrap-content {
     margin-top: 50px;
+}
+
+.user-list-view {
+    border: 1px solid #c0c0c0;
+    margin-top: 10px !important;
+    padding: 5px 15px;
+}
+
+.user-list-view p, .user-list-view label {
+    margin: 0;
+}
+
+.mgt-25 {
+    margin-top: 25px;
+}
+
+.chat-start .direct-chat-messages {
+    overflow: auto;
+}
+
+
+@media(max-width:767px) {
+    .nav li > form > button.logout {
+        display:block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 15px;
+    }
 }

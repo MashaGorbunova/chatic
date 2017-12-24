@@ -13,6 +13,8 @@ use Yii;
  * @property string $message
  * @property string $create_date
  * @property integer $is_read
+ * @property User $user
+ * @property User $sendUser
  */
 class Chat extends \yii\db\ActiveRecord
 {
@@ -50,5 +52,13 @@ class Chat extends \yii\db\ActiveRecord
             'create_date' => Yii::t('app', 'Create Date'),
             'is_read' => Yii::t('app', 'Is Read'),
         ];
+    }
+
+    public function getUser(){
+        return self::hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getSendUser(){
+        return self::hasOne(User::className(), ['id' => 'send_user_id']);
     }
 }

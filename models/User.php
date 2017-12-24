@@ -207,4 +207,12 @@ class User extends BaseUser
         }
     }
 
+    function isHasHistory(){
+        $users = Chat::find()->where(['send_user_id' => $this->id])->all();
+        if(count($users) > 0){
+            return true;
+        }
+        else return false;
+    }
+
 }
