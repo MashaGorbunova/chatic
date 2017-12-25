@@ -70,6 +70,10 @@ class ChatController extends Controller
             return $this->redirect(['/user/login']);
         }
 
+        if($id == Yii::$app->user->id){
+            return $this->redirect(['index']);
+        }
+
         $user = User::findOne(['id' => $id]);
 
         Chat::updateAll(['is_read' => 1], ['user_id' => $user->id, 'send_user_id' => Yii::$app->user->id]);

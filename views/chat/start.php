@@ -116,14 +116,16 @@ $this->params['breadcrumbs'][] = $this->title;
 <script>
 
     function checkMsg(){
+        var blockPrevHeight = $('#block').scrollTop();
+        console.log(blockPrevHeight);
+
         $.ajax({
             url: '<?=\yii\helpers\Url::to(['/chat/start', 'id' => $user->id])?>',
             method: 'POST',
             data: {pos: pos},
             success: function(msg){
                 $('.box-body').html($('.box-body', msg));
-                var block = document.getElementById("block");
-                block.scrollTop = block.scrollHeight;
+                $('#block').scrollTop(blockPrevHeight);
             }
         })
     }
@@ -148,7 +150,7 @@ $this->params['breadcrumbs'][] = $this->title;
     function preloader(){
         event.preventDefault();
         var blockPrevHeight = document.getElementById("block").scrollHeight;
-        setTimeout(checkMsg(), 50);
+
         $.ajax({
             url: '<?=\yii\helpers\Url::to(['/chat/start', 'id' => $user->id])?>',
             method: 'POST',
