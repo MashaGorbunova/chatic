@@ -150,7 +150,7 @@ a.desc:after {
     overflow: auto;
 }
 
-.history a > img {
+.history a > img, .imgleft {
     float: left;
     margin: 5px 20px 20px 0;
 }

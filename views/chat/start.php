@@ -117,7 +117,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     function checkMsg(){
         var blockPrevHeight = $('#block').scrollTop();
-        console.log(blockPrevHeight);
 
         $.ajax({
             url: '<?=\yii\helpers\Url::to(['/chat/start', 'id' => $user->id])?>',

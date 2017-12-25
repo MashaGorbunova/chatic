@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
-/* @var $model app\models\SignupForm */
+/* @var $model app\models\Student */
 /* @var $country integer */
 /* @var $language string */
 

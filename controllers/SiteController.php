@@ -200,4 +200,8 @@ class SiteController extends Controller
     public function actionLaba4(){
         return $this->render('airport');
     }
+
+    public function actionNews($id){
+        return $this->redirect(['/content/view', 'id' => $id]);
+    }
 }

@@ -7,7 +7,9 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Content */
 
 $this->title = (Yii::$app->language == 'uk')?$model->title_uk:$model->title_en;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Contents'), 'url' => ['index']];
+if(!Yii::$app->user->isGuest and Yii::$app->user->identity->isAdmin){
+    $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Contents'), 'url' => ['index']];
+}
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
